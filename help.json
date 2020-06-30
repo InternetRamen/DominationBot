@@ -1,0 +1,35 @@
+{
+    "config": {
+        "name": "config",
+        "description": "Change up per-server settings."
+    },
+    "ping": {
+        "name": "ping",
+        "description": "Sends the current ping."
+    },
+    "help": {
+        "name": "help",
+        "description": "Displays all the curent commands."
+    },
+    "setup": {
+        "name": "setup",
+        "description": "Set up the bot."
+    },
+    "start": {
+        "name": "start",
+        "description": "Starts the event and sends an information message to the info channel."
+    },
+    "end": {
+        "name": "end",
+        "description": "Ends the event. (Deletes the current setup data.)"
+    },
+    "leaderboard": {
+        "name": "leaderboard",
+        "description": "Shows whos winning in the event currently."
+    },
+    "about": {
+        "name": "about",
+        "description": "Information about the bot and event."
+    }
+
+}
