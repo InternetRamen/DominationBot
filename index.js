@@ -96,7 +96,16 @@ bot.on("guildCreate", guild => {
     let channels = guild.channels.cache
     if (!channels) return;
     let textChannels = channels.filter(val => val.type === "text")
-    
+    let validChannel = textChannels.map(val => val.id)
+    bot.channels.cache.get(validChannel[0]).send("Thank you for inviting Domination Bot. Please use `d!setup` and `d!about` to begin.")
+    bot.channels.cache.get(config.supportServerID).send(`${guild.owner} invited the bot to ${guild.name}`)
+
+
+
+})
+
+bot.on("guildRemove", guild => {
+    bot.channels.cache.get(config.supportServerID).send(`${guild.owner} removed the bot from ${guild.name}`)
 
 
 
