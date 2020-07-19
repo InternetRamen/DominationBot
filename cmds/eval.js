@@ -1,5 +1,5 @@
 module.exports.run = (bot, message, args) => {
-    if(message.author.id !== "345349646253817857") return;
+    if(message.author.id !== "728255006079189022") return;
   
   
     function clean(text) {
@@ -8,7 +8,7 @@ module.exports.run = (bot, message, args) => {
       else
           return text;
     }
-        if(message.author.id !== "345349646253817857") return;
+        if(message.author.id !== "728255006079189022") return;
         try {
           const code = args.join(" ");
           let evaled = eval(code);

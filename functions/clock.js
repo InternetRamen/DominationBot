@@ -23,6 +23,7 @@ module.exports = (bot) => {
                 if (!observe) return;
                 observe.teams[`team${winner.teamNumber}`].megaPoints += 1
                 if (channel.name !== winner.channelName) channel.setName(winner.channelName)
+                bot.channels.cache.get(obj.channelID).send(`${obj.teams[`team${winner.teamNumber}`].name} just got a mega point!`)
             }
             Object.keys(obj.teams).forEach(val => {
                 observe.teams[val].hiddenPoints = 0
