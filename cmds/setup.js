@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args) => {
     if (!numberOfTeams) return simpleEmbed(message.channel, "Setup", "Please send an actual number.")
     if (!numberOfTeams >= 2 && !numberOfTeams <= 4) return simpleEmbed(message.channel, "Setup", "Please send a number between 2 and 4")
     let teamArray = []
-    
+    let premium = bot.games.get(message.guild.id)
 
     let team1 = await teamPrompt(bot, message, "1")
     if (typeof team1 !== "object") return;
@@ -35,6 +35,7 @@ module.exports.run = async (bot, message, args) => {
     let team2 = await teamPrompt(bot, message, "2")
     if (typeof team2 !== "object") return;
     teamArray.push(team2)
+    if (numberOfTeams > 2 && premium.premium === false) return simpleEmbed(message.channel, "Error", "You must donate to access beta features.")
     if (numberOfTeams > 2) {
         let team3 = await teamPrompt(bot, message, "3")
         if (typeof team3 !== "object") return;

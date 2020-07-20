@@ -52,8 +52,7 @@ module.exports = async (bot, server) => {
         },
         channelID: 0,
         infoChannelID: 0,
-        guildID: 0
-
-
+        guildID: 0,
+        premium: false,
     })
 }

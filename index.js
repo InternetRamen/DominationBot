@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const i = new Intents(Intents.ALL).remove("GUILD_MESSAGE_TYPING");
+const bot = new Discord.Client({ws: {intents: i}});
 const config = require("./config.json");
 const fs = require("fs")
 const Enmap = require('enmap')
