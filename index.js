@@ -79,11 +79,11 @@ bot.on('message', message => {
     let team2Members = obj.teams.team2.memberIDs
     let participants = team1Members.concat(team2Members)
     if (obj.teams.team3.available === true) {
-        let team3 = obj.teams.team3.memberIDs
+        let team3Members = obj.teams.team3.memberIDs
         participants = participants.concat(team3Members)
     }
     if (obj.teams.team4.available === true) {
-        let team4 = obj.teams.team4.memberIDs
+        let team4Members = obj.teams.team4.memberIDs
         participants = participants.concat(team4Members)
     }
     if (!participants.includes(message.author.id)) return;
