@@ -34,7 +34,7 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-    
+
 
     if (message.channel.type === "dm") return;
     if (message.author.bot) return;
@@ -43,24 +43,45 @@ bot.on('message', message => {
     if (!prefix) prefix = "d!"
     else prefix = prefix.prefix
     if (prefix === undefined) prefix = "d!"
-    if (!message.content.startsWith(prefix)) return;
-    let messageArray = message.content.split(" ");
-    let cmd;
-    let args;
-    if (messageArray[0] === prefix) {
-        cmd = messageArray[1]
-        args = messageArray.slice(2)
-    } else {
-        cmd = messageArray[0].slice(prefix.length)
-        args = messageArray.slice(1);
+    if (message.content.startsWith(prefix) === true) {
+        let messageArray = message.content.split(" ");
+        let cmd;
+        let args;
+        if (messageArray[0] === prefix) {
+            cmd = messageArray[1]
+            args = messageArray.slice(2)
+        } else {
+            cmd = messageArray[0].slice(prefix.length)
+            args = messageArray.slice(1);
+        }
+
+        let cmdFile = bot.cmds.get(cmd);
+
+        let alias = bot.alias.get(cmd)
+        if (cmdFile) cmdFile.run(bot, message, args);
+        else if (alias) alias.run(bot, message, args)
     }
 
-    let cmdFile = bot.cmds.get(cmd);
-
-    let alias = bot.alias.get(cmd)
-    if (cmdFile) cmdFile.run(bot, message, args);
-    else if (alias) alias.run(bot, message, args)
-
+    let obj = bot.games.get(message.guild.id)
+    if (!obj) return;
+        if (obj.setup === false) return;
+        if (obj.inGame === false) return;
+        if (message.channel.id !== obj.channelID) return;
+        let team1Members = obj.teams.team1.memberIDs
+        let team2Members = obj.teams.team2.memberIDs
+        let participants = team1Members.concat(team2Members)
+        if (obj.teams.team3.available === true) {
+            let team3Members = obj.teams.team3.memberIDs
+            participants = participants.concat(team3Members)
+        }
+        if (obj.teams.team4.available === true) {
+            let team4Members = obj.teams.team4.memberIDs
+            participants = participants.concat(team4Members)
+        }
+        if (!participants.includes(message.author.id)) return;
+        let observeable = bot.games.observe(message.guild.id)
+        let correctTeam = Object.values(obj.teams).find(val => val.memberIDs.includes(message.author.id))
+        observeable.teams[`team${correctTeam.teamNumber}`].hiddenPoints += 1
 
 
 });
@@ -68,28 +89,6 @@ bot.on('message', message => {
 bot.on('message', message => {
     
 
-    if (message.channel.type === "dm") return;
-    if (message.author.bot) return;
-    let obj = bot.games.get(message.guild.id)
-    if (!obj) return;
-    if (obj.setup === false) return;
-    if (obj.inGame === false) return;
-    if (message.channel.id !== obj.channelID) return;
-    let team1Members = obj.teams.team1.memberIDs
-    let team2Members = obj.teams.team2.memberIDs
-    let participants = team1Members.concat(team2Members)
-    if (obj.teams.team3.available === true) {
-        let team3Members = obj.teams.team3.memberIDs
-        participants = participants.concat(team3Members)
-    }
-    if (obj.teams.team4.available === true) {
-        let team4Members = obj.teams.team4.memberIDs
-        participants = participants.concat(team4Members)
-    }
-    if (!participants.includes(message.author.id)) return;
-    let observeable = bot.games.observe(message.guild.id)
-    let correctTeam = Object.values(obj.teams).find(val => val.memberIDs.includes(message.author.id))
-    observeable.teams[`team${correctTeam.teamNumber}`].hiddenPoints += 1
 });
 
 bot.on("guildCreate", guild => {
